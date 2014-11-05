@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/com/dartou/lib/data/DeviceData.java=UTF-8
+encoding//src/com/dartou/lib/network/http/BasicHttpClient.java=UTF-8
+encoding//src/com/dartou/lib/network/socket/BaseByteWriteUtil.java=UTF-8
+encoding//src/com/dartou/lib/network/socket/ByteUtil.java=UTF-8
+encoding//src/com/dartou/lib/network/socket/CConnection.java=UTF-8
+encoding//src/com/dartou/lib/network/socket/CServerInfo.java=UTF-8
+encoding//src/com/dartou/lib/network/socket/infa/IParser.java=UTF-8
+encoding//src/com/dartou/lib/reciever/NetworkReceiver.java=UTF-8
+encoding//src/com/dartou/lib/utils/DensityUtil.java=UTF-8
+encoding//src/com/dartou/lib/utils/FormatTransferUtil.java=UTF-8
+encoding//src/com/dartou/lib/utils/LogUtil.java=UTF-8
+encoding//src/com/dartou/lib/utils/MD5Util.java=UTF-8
+encoding/<project>=UTF-8

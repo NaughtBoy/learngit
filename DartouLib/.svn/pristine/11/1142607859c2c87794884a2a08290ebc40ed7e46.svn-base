@@ -1,0 +1,567 @@
+package com.dartou.lib.view.mydraw;
+
+import com.dartou.lib.utils.InputMethodUtil;
+import com.dartou.lib.view.mydraw.BaseDrawerActivity.MyDrawerListener;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.os.Handler;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.RelativeLayout;
+/**
+ * 抽屉中间布局
+ * @author cyn
+ */
+public class CentLayout extends RelativeLayout {
+
+	SlidingMenu mSlidingMenu;
+	
+	float x;
+	boolean startScroll;
+	boolean canScroll;
+	public CentLayout(Context context, AttributeSet attrs,SlidingMenu slidingMenu) {
+		super(context, attrs);
+
+		this.mSlidingMenu = slidingMenu;
+	}
+
+	boolean flag;
+	boolean flagTime = true;
+	float y ;
+//	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		
+		
+		if(ev.getAction()==MotionEvent.ACTION_DOWN){
+			x = ev.getRawX();
+			y = ev.getRawY();
+			downX = x;
+			downY = y;
+			downTime = System.currentTimeMillis();
+			if(flagTime){
+				flagTime = false;
+				int scrollX = getScrollX();
+				float x = ev.getX();
+				Runnable run = new Runnable() {
+					
+					@Override
+					public void run() {
+						flagTime = true;
+						flag = false;
+					}
+				};
+				if(scrollX>0&&x<mSlidingMenu.screen_width-scrollX){
+//					((SlidingMenu)getParent()).handler(ev,run);
+					flag = true;
+					x = 0;
+					y = 0;
+				}else if(scrollX<0&&x>-scrollX){
+//					((SlidingMenu)getParent()).handler(ev,run);
+					flag = true;
+					x = 0;
+					y = 0;
+				}else{
+					flag = false;
+					flagTime = true;
+				}
+				return flag;
+			}
+			
+		}else if(ev.getAction()==MotionEvent.ACTION_MOVE&&flagTime){
+			float detalX = Math.abs(x-ev.getRawX());
+			float deatlY = Math.abs(y-ev.getRawY());
+			if(detalX>deatlY*4&&detalX>mSlidingMenu.screen_width/30){
+				flag = false;
+				flagTime = true;
+				return true;
+			}
+		}
+		
+		
+		
+		return false;
+		
+	}
+//	
+	
+	float downX,downY;
+	long downTime;
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		
+		
+		
+		//检查软键盘是否弹出，若弹出，则隐藏软键盘
+		InputMethodManager imm = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+		
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			x = event.getRawX();
+			y = event.getRawY();
+			downX = x;
+			downY = y;
+			downTime = System.currentTimeMillis();
+			
+			
+			canScroll = true;
+			if(event.getRawX()>=mSlidingMenu.screen_width-getScrollX()||event.getX()<=-getScrollX()){
+				return false;
+			}else{
+				return true;
+			}
+//			break;
+		case MotionEvent.ACTION_MOVE:
+			if(!isScroll){
+				return false;
+			}
+//			if((flag&&Math.abs(y-event.getRawY())>mSlidingMenu.screen_width/3)||!flagTime){
+//				return true;
+//			}
+			
+			float detal = x-event.getRawX();
+			
+			if(Math.abs(detal)>20){
+//				System.out.println("ACTION_MOVE-->1");
+				canScroll = true;
+				if(!startScroll){
+//					System.out.println("ACTION_MOVE-->2");
+					startScroll = true;
+					x = event.getRawX();
+					y = event.getRawY();
+//					if(detal<0&&!mSlidingMenu.leftState){
+//						mSlidingMenu.showLeft(false);
+//					}else if(!mSlidingMenu.rightState){
+//						mSlidingMenu.showRight(false);
+//					}
+					
+					
+					return false;
+				} 
+			}
+			if(detal<0&&getScrollX()<=10){
+//				System.out.println("ACTION_MOVE-->3");
+				mSlidingMenu.showLeft(false);
+			}else if(detal>0&&getScrollX()>=-10){
+//				System.out.println("ACTION_MOVE-->4");
+				mSlidingMenu.showRight(false);
+			}
+//			System.out.println("detal--->"+detal+" getScrollX-->"+getScrollX());
+//			if(detal<0&&getScrollX()<=0){
+////				mSlidingMenu.showLeft(false);
+//				mSlidingMenu.setRightVislble(false);
+//			}else if(detal>0&&getScrollX()>=0){
+////				mSlidingMenu.showRight(false);
+//				mSlidingMenu.setLeftVislble(false);
+//			}
+			
+			if(getScrollX()<=0){
+//				mSlidingMenu.showLeft(false);
+				mSlidingMenu.setRightVislble(false);
+			}else if(getScrollX()>=0){
+//				mSlidingMenu.showRight(false);
+				mSlidingMenu.setLeftVislble(false);
+			}
+			
+			int s = getScrollX();
+			if(canScroll&&startScroll){
+				
+				
+				if(detal<0){
+					int w = 0;
+					MenuLayout v = null;
+					MyDrawerListener listener = null;
+					if(s>0){
+						if(mSlidingMenu.rightState){
+							w = mSlidingMenu.mRightWidth;
+							v = mSlidingMenu.mRightView;
+						}else{
+							w = mSlidingMenu.mRightWidth2;
+							v = mSlidingMenu.mRightView2;
+						}
+						listener = mSlidingMenu.mRightMyDrawerListener;
+					}else{
+						if(mSlidingMenu.leftState){
+							w = mSlidingMenu.mLeftWidth;
+							v = mSlidingMenu.mLeftView;
+						}else{
+							w = mSlidingMenu.mLeftWidth2;
+							v = mSlidingMenu.mLeftView2;
+						}
+						listener = mSlidingMenu.mLeftMyDrawerListener;
+					}
+					
+					if(-(s+detal)<w){
+						scrollBy((int) detal, 0);
+						float f = -(s+detal)*1.0f/w;
+						if(s<0){
+							v.setScale(f);
+							if(listener!=null){
+								listener.detal(f);
+							}
+							
+						}else{
+							v.setScale(-f);
+							if(listener!=null){
+								listener.detal(-f);
+							}
+						}
+						
+						x = event.getRawX();
+					}else if(-s<w){
+						detal = (int) (-w-s);
+						scrollBy((int) detal, 0);
+						float f = -(s+detal)*1.0f/w;
+						v.setScale(f);
+						x = x+detal;
+						
+						if(listener!=null){
+							listener.detal(f);
+						}
+					}
+				}else{
+					int w;
+					MenuLayout v;
+					MyDrawerListener listener;
+					if(s>=0){
+						if(mSlidingMenu.rightState){
+							w = mSlidingMenu.mRightWidth;
+							v = mSlidingMenu.mRightView;
+						}else{
+							w = mSlidingMenu.mRightWidth2;
+							v = mSlidingMenu.mRightView2;
+						}
+						listener = mSlidingMenu.mRightMyDrawerListener;
+					}else{
+						if(mSlidingMenu.leftState){
+							w = mSlidingMenu.mLeftWidth;
+							v = mSlidingMenu.mLeftView;
+						}else{
+							w = mSlidingMenu.mLeftWidth2;
+							v = mSlidingMenu.mLeftView2;
+						}
+						listener = mSlidingMenu.mLeftMyDrawerListener;
+					}
+					
+					if(s+detal<w){
+						scrollBy((int) detal, 0);
+						float f = (Math.abs(s+detal))*1.0f/w;
+						v.setScale(f);
+						x = event.getRawX();
+						
+						if(listener!=null){
+							listener.detal(f);
+						}
+					}else if(s<w){
+						detal = (int) (w-s);
+						float f = (Math.abs(s+detal))*1.0f/w;
+						v.setScale(f);
+						scrollBy((int) detal, 0);
+						
+						if(listener!=null){
+							listener.detal(f);
+						}
+						x += detal;
+					}
+				}
+				
+				
+//				if(detal<0&&((-detalSum+detal<mSlidingMenu.mLeftWidth&&mSlidingMenu.leftState)||(-detalSum<mSlidingMenu.mLeftWidth2&&!mSlidingMenu.leftState))){
+//					scrollBy((int) detal, 0);
+//					x = event.getX();
+//				}else if(detal>0&&((detalSum<mSlidingMenu.mRightWidth&&mSlidingMenu.rightState)||(detalSum<mSlidingMenu.mRightWidth2&&!mSlidingMenu.rightState))){
+//					scrollBy((int) detal, 0);
+//					x = event.getX();
+//				}
+//				detalSum += detal;
+			}
+			
+			return true;
+//			break;
+		case MotionEvent.ACTION_UP:
+		case MotionEvent.ACTION_CANCEL:
+			if(!isScroll){
+				return false;
+			}
+			startScroll = false;
+			canScroll = false;
+			int duration = -1;
+			
+			float upX = event.getRawX(),upY = event.getRawY();
+			long upTime = System.currentTimeMillis();
+			boolean quick = false;
+			
+			float v = Math.abs(upX-downX)/((upTime-downTime)*0.001f);
+//			System.out.println("ACTION_UP-->1");
+			if(v>mSlidingMenu.screen_width*1.5){
+//				System.out.println("ACTION_UP-->2");
+				quick = true;
+			}
+			if(mSlidingMenu.menu_state==0){
+				int scrollX = getScrollX();
+				
+				if(scrollX<0){
+//					System.out.println("ACTION_UP-->3");
+					int w;
+					if(mSlidingMenu.leftState){
+						w = mSlidingMenu.mLeftWidth;
+					}else{
+						w = mSlidingMenu.mLeftWidth2;
+					}
+					if(mSlidingMenu.mRightMyDrawerListener!=null){
+						mSlidingMenu.mRightMyDrawerListener.derectClose(0);
+					}
+					if(-scrollX>w/3||quick){
+//						duration = (int) (Math.abs(w+scrollX)/mSlidingMenu.scrollV);
+						duration = 200;
+						mSlidingMenu.mScroller.startScroll(scrollX, 0, -(w+scrollX), 0, duration);
+						
+						mSlidingMenu.mainView.postInvalidate();
+						mSlidingMenu.showLeft(false);
+						if(mSlidingMenu.leftState){
+							mSlidingMenu.isLeft = true;
+							mSlidingMenu.mLeftView.open(duration);
+						}else{
+							mSlidingMenu.isLeft2 = true;
+							mSlidingMenu.mLeftView2.open(duration);
+						}
+						if(mSlidingMenu.mLeftMyDrawerListener!=null){
+							mSlidingMenu.mLeftMyDrawerListener.open(duration);
+						}
+						mSlidingMenu.menu_state = -1;
+					}else{
+//						duration = (int) (Math.abs(scrollX)/mSlidingMenu.scrollV);
+						duration = 200;
+						mSlidingMenu.mScroller.startScroll(getScrollX(), 0, (-scrollX), 0, duration);
+						mSlidingMenu.mainView.postInvalidate();
+						if(mSlidingMenu.leftState){
+							mSlidingMenu.isLeft = false;
+							mSlidingMenu.mLeftView.close(duration);
+						}else{
+							mSlidingMenu.isLeft2 = false;
+							mSlidingMenu.mLeftView2.close(duration);
+						}
+						if(mSlidingMenu.mLeftMyDrawerListener!=null){
+							mSlidingMenu.mLeftMyDrawerListener.close(duration);
+						}
+						mSlidingMenu.menu_state = 0;
+					}
+				}else if(scrollX>0){
+//					System.out.println("ACTION_UP-->4");
+					
+					int w;
+					if(mSlidingMenu.rightState){
+						w = mSlidingMenu.mRightWidth;
+					}else{
+						w = mSlidingMenu.mRightWidth2;
+					}
+					if(mSlidingMenu.mLeftMyDrawerListener!=null){
+						mSlidingMenu.mLeftMyDrawerListener.derectClose(0);
+					}
+					
+					if(scrollX>w/3||quick){
+//						System.out.println("ACTION_UP-->5");
+//						duration = (int) (Math.abs(w-scrollX)/mSlidingMenu.scrollV);
+						duration = 200;
+						mSlidingMenu.mScroller.startScroll(getScrollX(), 0, (w-scrollX), 0, duration);
+						mSlidingMenu.mainView.postInvalidate();
+						mSlidingMenu.menu_state = 1;
+						mSlidingMenu.showRight(false);
+						if(mSlidingMenu.rightState){
+							mSlidingMenu.isRight = true;
+							mSlidingMenu.mRightView.open(duration);
+//							System.out.println("ACTION_UP-->6");
+						}else{
+							mSlidingMenu.isRight2 = true;
+							mSlidingMenu.mRightView2.open(duration);
+						}
+						if(mSlidingMenu.mRightMyDrawerListener!=null){
+							mSlidingMenu.mRightMyDrawerListener.open(duration);
+						}
+						mSlidingMenu.menu_state = 1;
+					}else{
+//						duration = (int) (Math.abs(scrollX)/mSlidingMenu.scrollV);
+						duration = 200;
+						mSlidingMenu.mScroller.startScroll(getScrollX(), 0, (-scrollX), 0, duration);
+						mSlidingMenu.mainView.postInvalidate();
+						mSlidingMenu.menu_state = 0;
+						if(mSlidingMenu.rightState){
+							mSlidingMenu.isRight = false;
+							mSlidingMenu.mRightView.close(duration);
+						}else{
+							mSlidingMenu.isRight2 = false;
+							mSlidingMenu.mRightView2.close(duration);
+						}
+						if(mSlidingMenu.mRightMyDrawerListener!=null){
+							mSlidingMenu.mRightMyDrawerListener.close(duration);
+						}
+					}
+				}else{
+					mSlidingMenu.menu_state = 0;
+				}
+				
+			}else{
+				
+				if(Math.abs(downX-upX)<mSlidingMenu.screen_width/50||(quick&&((downX>=upX-10&&(mSlidingMenu.menu_state==-1))||(downX<=upX+10&&(mSlidingMenu.menu_state==1))))){
+//					mSlidingMenu.showCenter();
+//					flag = false;
+//					flagTime = true;
+//					x = 0;
+//					y = 0;
+//					return true;
+					
+					quick = true;
+				}else{
+					quick = false;
+				}
+				
+				int scrollX = getScrollX();
+				
+				
+//				if((scrollX<-mSlidingMenu.&&downX-upX<10)||(scrollX>0&&downX-upX<10)){
+//					return true;
+//				}
+				
+				if(scrollX<0){
+					int w;
+					if(mSlidingMenu.leftState){
+						w = mSlidingMenu.mLeftWidth;
+					}else{
+						w = mSlidingMenu.mLeftWidth2;
+					}
+					
+					if(mSlidingMenu.mRightMyDrawerListener!=null&&mSlidingMenu.menu_state==1){
+						mSlidingMenu.mRightMyDrawerListener.derectClose(0);
+					}
+					
+				 	if((-scrollX>w*2/3&&!quick)||(mSlidingMenu.menu_state==1&&-scrollX>w/3)){
+//						duration = (int) (Math.abs(w+scrollX)/mSlidingMenu.scrollV);
+						duration = 200;
+						mSlidingMenu.mScroller.startScroll(scrollX, 0, -(w+scrollX), 0, duration);
+						
+						mSlidingMenu.mainView.postInvalidate();
+						if(mSlidingMenu.leftState){
+							mSlidingMenu.isLeft = true;
+							mSlidingMenu.mLeftView.open(duration);
+						}else{
+							mSlidingMenu.isLeft2 = true;
+							mSlidingMenu.mLeftView2.open(duration);
+						}
+						if(-scrollX!=w&&mSlidingMenu.mLeftMyDrawerListener!=null){
+							mSlidingMenu.mLeftMyDrawerListener.open(duration);
+						}
+						
+						mSlidingMenu.menu_state = -1;
+					}else{
+//						duration = (int) (Math.abs(scrollX)/mSlidingMenu.scrollV);
+						duration = 200;
+						mSlidingMenu.mScroller.startScroll(getScrollX(), 0, (-scrollX), 0, duration);
+						mSlidingMenu.mainView.postInvalidate();
+						if(mSlidingMenu.leftState){
+							mSlidingMenu.isLeft = false;
+							mSlidingMenu.mLeftView.close(duration);
+						}else{
+							mSlidingMenu.isLeft2 = false;
+							mSlidingMenu.mLeftView2.close(duration);
+						}
+						if(mSlidingMenu.mLeftMyDrawerListener!=null){
+							mSlidingMenu.mLeftMyDrawerListener.close(duration);
+						}
+						mSlidingMenu.menu_state = 0;
+						InputMethodUtil.closeInputMethodManager((Activity)getContext());
+					}
+				 	
+				}else if(scrollX>0){
+					int w;
+					if(mSlidingMenu.rightState){
+						w = mSlidingMenu.mRightWidth;
+					}else{
+						w = mSlidingMenu.mRightWidth2;
+					}
+					
+					if(mSlidingMenu.mLeftMyDrawerListener!=null&&mSlidingMenu.menu_state==-1){
+						mSlidingMenu.mLeftMyDrawerListener.derectClose(0);
+					}
+					
+					if((scrollX>w*2/3&&!quick)||(mSlidingMenu.menu_state==-1&&scrollX>w/3)){
+//						duration = (int) (Math.abs(w-scrollX)/mSlidingMenu.scrollV);
+						duration = 200;
+						mSlidingMenu.mScroller.startScroll(getScrollX(), 0, (w-scrollX), 0, duration);
+						mSlidingMenu.mainView.postInvalidate();
+						if(mSlidingMenu.rightState){
+							mSlidingMenu.isRight = true;
+							mSlidingMenu.mRightView.open(duration);
+							
+						}else{
+							mSlidingMenu.isRight2 = true;
+							mSlidingMenu.mRightView2.open(duration);
+						}
+						if(scrollX!=w&&mSlidingMenu.mRightMyDrawerListener!=null){
+							mSlidingMenu.mRightMyDrawerListener.open(duration);
+						}
+						
+						mSlidingMenu.menu_state = 1;
+					}else{
+//						duration = (int) (Math.abs(scrollX)/mSlidingMenu.scrollV);
+						duration = 200;
+						mSlidingMenu.mScroller.startScroll(getScrollX(), 0, (-scrollX), 0, duration);
+						mSlidingMenu.mainView.postInvalidate();
+						if(mSlidingMenu.rightState){
+							mSlidingMenu.isRight = false;
+							mSlidingMenu.mRightView.close(duration);
+						}else{
+							mSlidingMenu.isRight2 = false;
+							mSlidingMenu.mRightView2.close(duration);
+						}
+						InputMethodUtil.closeInputMethodManager((Activity)getContext());
+						if(mSlidingMenu.mRightMyDrawerListener!=null){
+							mSlidingMenu.mRightMyDrawerListener.close(duration);
+						}
+						mSlidingMenu.menu_state = 0;
+					}
+					
+				}
+			}
+//			else if(flag){
+//				if((downX>=upX-10&&(mSlidingMenu.menu_state==-1))||(downX<=upX+10&&(mSlidingMenu.menu_state==1))){
+//					mSlidingMenu.showCenter();
+//				}
+//			}
+			if(duration>=0){
+				new Handler().postDelayed(new Runnable() {
+					
+					@Override
+					public void run() {
+						flag = false;
+						flagTime = true;
+						x = 0;
+						y = 0;
+					}
+				}, duration);
+			}else{
+				flag = false;
+				flagTime = true;
+				x = 0;
+				y = 0;
+			}
+			
+			break;
+
+		default:
+			break;
+		}
+//		return true;
+		return super.onTouchEvent(event);
+	}
+
+	
+	private boolean isScroll = true;
+	public void setCanScroll(boolean isScroll){
+		this.isScroll = isScroll;
+	}
+}
