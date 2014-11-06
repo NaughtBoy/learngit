@@ -70,10 +70,10 @@ public class OldCard extends LinearLayout implements OnClickListener {
 				UIControl.p.y / 6);
 		cardParams.topMargin = UIControl.p.y / 96;
 		this.setOrientation(LinearLayout.VERTICAL);
-		this.setBackgroundResource(R.drawable.card_bg);
-		this.getBackground().setAlpha((int) (0.57 * 255));
+		this.setBackgroundResource(R.drawable.card_bg3);
+//		this.getBackground().setAlpha((int) (0.57 * 255));
 		this.setGravity(Gravity.CENTER);
-		this.setLayoutParams(cardParams);
+		this.setLayoutParams(new LayoutParams((int) (UIControl.p.x * 0.995), LayoutParams.WRAP_CONTENT));
 		this.setOnClickListener(this);
 
 		// 简易布局
@@ -200,16 +200,16 @@ public class OldCard extends LinearLayout implements OnClickListener {
 			isOpen = !isOpen;
 			cardParams.height = cardParams.height * 2 + decHeight;
 			this.addView(mDecLayout);
-			this.setLayoutParams(cardParams);
-			this.setBackgroundResource(R.drawable.card_bg2);
-			this.getBackground().setAlpha((int) (0.57 * 255));
+//			this.setLayoutParams(cardParams);
+//			this.setBackgroundResource(R.drawable.card_bg2);
+//			this.getBackground().setAlpha((int) (0.57 * 255));
 		} else {
 			isOpen = !isOpen;
 			cardParams.height = mResumeLayout.getLayoutParams().height;
 			this.removeView(mDecLayout);
-			this.setLayoutParams(cardParams);
-			this.setBackgroundResource(R.drawable.card_bg);
-			this.getBackground().setAlpha((int) (0.57 * 255));
+//			this.setLayoutParams(cardParams);
+//			this.setBackgroundResource(R.drawable.card_bg);
+//			this.getBackground().setAlpha((int) (0.57 * 255));
 		}
 	}
 }

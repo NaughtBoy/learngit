@@ -21,6 +21,7 @@ import android.widget.Scroller;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 import android.view.View.OnClickListener;
 
 public class LostCard extends LinearLayout implements OnClickListener {
@@ -69,11 +70,12 @@ public class LostCard extends LinearLayout implements OnClickListener {
 		cardParams.topMargin = UIControl.p.y / 96;
 		this.setOrientation(LinearLayout.VERTICAL);
 		this.setBackgroundResource(R.drawable.card_bg3);
-		this.getBackground().setAlpha((int) (0.57 * 255));
+//		this.getBackground().setAlpha((int) (0.57 * 255));
 		this.setGravity(Gravity.CENTER);
-		this.setLayoutParams(cardParams);
+//		this.setLayoutParams(cardParams);
+		this.setLayoutParams(new LayoutParams((int) (UIControl.p.x * 0.995), LayoutParams.WRAP_CONTENT));
 		this.setOnClickListener(this);
-
+//		this.getLayoutParams().height=LayoutParams.WRAP_CONTENT;
 		// 简易布局
 		mResumeLayout.setLayoutParams(new LayoutParams(
 				(int) (UIControl.p.x * 0.995), UIControl.p.y / 6));
@@ -192,22 +194,24 @@ public class LostCard extends LinearLayout implements OnClickListener {
 		// 根据文本框高度调节整个卡片的高度
 		int decHeight = (mDecView.getLineCount() + (isFrist ? 2 : -3))
 				* mDecView.getLineHeight();
-		;
+		
 		isFrist = false;
 		if (!isOpen) {
 			isOpen = !isOpen;
 			cardParams.height = cardParams.height * 2 + decHeight;
 			this.addView(mDecLayout);
-			this.setLayoutParams(cardParams);
+//			this.setLayoutParams(cardParams);
+//			this.setLayoutParams(new LayoutParams((int) (UIControl.p.x * 0.995), LayoutParams.WRAP_CONTENT));
 //			this.setBackgroundResource(R.drawable.card_bg2);
-			this.getBackground().setAlpha((int) (0.57 * 255));
+//			this.getBackground().setAlpha((int) (0.57 * 255));
 		} else {
 			isOpen = !isOpen;
 			cardParams.height = mResumeLayout.getLayoutParams().height;
 			this.removeView(mDecLayout);
-			this.setLayoutParams(cardParams);
+//			this.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+//			this.setLayoutParams(cardParams);
 //			this.setBackgroundResource(R.drawable.card_bg);
-			this.getBackground().setAlpha((int) (0.57 * 255));
+//			this.getBackground().setAlpha((int) (0.57 * 255));
 		}
 	}
 }

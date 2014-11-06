@@ -200,6 +200,7 @@ public class OldLayout extends BaseLayout {
 		default:
 			break;
 		}
+		goodsQuery.order("-createdAt");
 	}
 
 }

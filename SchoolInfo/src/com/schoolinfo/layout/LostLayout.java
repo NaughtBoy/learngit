@@ -207,6 +207,7 @@ public class LostLayout extends BaseLayout {
 		default:
 			break;
 		}
+		goodsQuery.order("-createdAt");
 	}
 
 }
