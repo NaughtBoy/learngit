@@ -126,11 +126,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
          */
-        public static int activity_horizontal_margin=0x7f050000;
-        public static int activity_vertical_margin=0x7f050001;
-        public static int list_padding=0x7f050003;
-        public static int shadow_width=0x7f050004;
-        public static int slidingmenu_offset=0x7f050002;
+        public static int activity_horizontal_margin=0x7f040000;
+        public static int activity_vertical_margin=0x7f040001;
+        public static int list_padding=0x7f040003;
+        public static int shadow_width=0x7f040004;
+        public static int slidingmenu_offset=0x7f040002;
     }
     public static final class drawable {
         public static int room_clock=0x7f020000;
@@ -138,19 +138,19 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static int shadowright=0x7f020002;
     }
     public static final class id {
-        public static int content_frame=0x7f040006;
-        public static int fullscreen=0x7f040003;
-        public static int left=0x7f040000;
-        public static int margin=0x7f040002;
-        public static int menu_frame=0x7f040007;
-        public static int menu_frame_two=0x7f040008;
-        public static int none=0x7f040004;
-        public static int right=0x7f040001;
-        public static int selected_view=0x7f040005;
-        public static int slidingmenumain=0x7f040009;
+        public static int content_frame=0x7f060006;
+        public static int fullscreen=0x7f060003;
+        public static int left=0x7f060001;
+        public static int margin=0x7f060004;
+        public static int menu_frame=0x7f060007;
+        public static int menu_frame_two=0x7f060008;
+        public static int none=0x7f060005;
+        public static int right=0x7f060002;
+        public static int selected_view=0x7f060000;
+        public static int slidingmenumain=0x7f060009;
     }
     public static final class integer {
-        public static int num_cols=0x7f060000;
+        public static int num_cols=0x7f050000;
     }
     public static final class layout {
         public static int activity_main=0x7f030000;
@@ -239,7 +239,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name com.dartou.lib:behindOffset
         */
-        public static final int SlidingMenu_behindOffset = 3;
+        public static int SlidingMenu_behindOffset = 3;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#behindScrollScale}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -253,7 +253,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name com.dartou.lib:behindScrollScale
         */
-        public static final int SlidingMenu_behindScrollScale = 5;
+        public static int SlidingMenu_behindScrollScale = 5;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#behindWidth}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -269,7 +269,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name com.dartou.lib:behindWidth
         */
-        public static final int SlidingMenu_behindWidth = 4;
+        public static int SlidingMenu_behindWidth = 4;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#fadeDegree}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -283,7 +283,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name com.dartou.lib:fadeDegree
         */
-        public static final int SlidingMenu_fadeDegree = 11;
+        public static int SlidingMenu_fadeDegree = 11;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#fadeEnabled}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -297,7 +297,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name com.dartou.lib:fadeEnabled
         */
-        public static final int SlidingMenu_fadeEnabled = 10;
+        public static int SlidingMenu_fadeEnabled = 10;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#mode}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -314,7 +314,7 @@ containing a value of this type.
 </table>
           @attr name com.dartou.lib:mode
         */
-        public static final int SlidingMenu_mode = 0;
+        public static int SlidingMenu_mode = 0;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#selectorDrawable}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -324,7 +324,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name com.dartou.lib:selectorDrawable
         */
-        public static final int SlidingMenu_selectorDrawable = 13;
+        public static int SlidingMenu_selectorDrawable = 13;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#selectorEnabled}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -338,7 +338,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name com.dartou.lib:selectorEnabled
         */
-        public static final int SlidingMenu_selectorEnabled = 12;
+        public static int SlidingMenu_selectorEnabled = 12;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#shadowDrawable}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -348,7 +348,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name com.dartou.lib:shadowDrawable
         */
-        public static final int SlidingMenu_shadowDrawable = 8;
+        public static int SlidingMenu_shadowDrawable = 8;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#shadowWidth}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -364,7 +364,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name com.dartou.lib:shadowWidth
         */
-        public static final int SlidingMenu_shadowWidth = 9;
+        public static int SlidingMenu_shadowWidth = 9;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#touchModeAbove}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -382,7 +382,7 @@ containing a value of this type.
 </table>
           @attr name com.dartou.lib:touchModeAbove
         */
-        public static final int SlidingMenu_touchModeAbove = 6;
+        public static int SlidingMenu_touchModeAbove = 6;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#touchModeBehind}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -400,7 +400,7 @@ containing a value of this type.
 </table>
           @attr name com.dartou.lib:touchModeBehind
         */
-        public static final int SlidingMenu_touchModeBehind = 7;
+        public static int SlidingMenu_touchModeBehind = 7;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#viewAbove}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -410,7 +410,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name com.dartou.lib:viewAbove
         */
-        public static final int SlidingMenu_viewAbove = 1;
+        public static int SlidingMenu_viewAbove = 1;
         /**
           <p>This symbol is the offset where the {@link com.dartou.lib.R.attr#viewBehind}
           attribute's value can be found in the {@link #SlidingMenu} array.
@@ -420,6 +420,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name com.dartou.lib:viewBehind
         */
-        public static final int SlidingMenu_viewBehind = 2;
+        public static int SlidingMenu_viewBehind = 2;
     };
 }
