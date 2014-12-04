@@ -53,7 +53,6 @@ public class MyDragButton extends Button {
 		params.topMargin = UIControl.p.y / 2;
 		params.leftMargin = 0;
 		this.setLayoutParams(params);
-
 		this.setClickable(true);
 	}
 

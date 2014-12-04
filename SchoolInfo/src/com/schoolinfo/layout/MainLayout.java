@@ -32,7 +32,6 @@ public class MainLayout extends RelativeLayout {
 		// TODO Auto-generated constructor stub
 		mMainLayout = this;
 		this.setBackgroundResource(R.drawable.background);
-
 		mMainGalleryLayout = new MainGalleryLayout(context);
 		mDragButton = new MyDragButton(context);
 	}

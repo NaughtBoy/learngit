@@ -5,7 +5,7 @@ package com.schoolinfo.layout;
  * @author huangwubin 2014-9-21
  */
 public enum RunLayout {
-	MAINGALLERY,LOSTLAYOUT,OLDLAYOUT,RELEASELAYOUT,LOGINLAYOUT,PERSONALLAYOUT;
+	MAINGALLERY,LOSTLAYOUT,OLDLAYOUT,RELEASELAYOUT,LOGINLAYOUT,PERSONALLAYOUT,MAPLAYOUT;
 	
 	public static RunLayout getRunLayout(BaseLayout layout){
 		if (layout instanceof LostLayout) {
@@ -22,6 +22,9 @@ public enum RunLayout {
 		}
 		else if (layout instanceof PersonalLayout) {
 			return PERSONALLAYOUT;
+		}
+		else if (layout instanceof MapLayout) {
+			return MAPLAYOUT;
 		}
 		return null;
 	}

@@ -27,18 +27,18 @@ import android.widget.TextView;
  * 
  * @author huangwubin 2014-9-29
  */
-public class TopLayout extends RelativeLayout{
+public class TopLayout extends RelativeLayout {
 
 	private ImageView mLoginView;// 头像
 	private TextView mCurrentTextView;// 当前界面的文本
-	
+
 	private User mUser;// 当前登陆的用户
 
 	public TopLayout(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		mUser = MainLayout.getInstance().mCurrentUser;
-//		mUser=(User) BmobUser.getCurrentUser(context);
+		// mUser=(User) BmobUser.getCurrentUser(context);
 		mLoginView = new ImageView(context);
 		mCurrentTextView = new TextView(context);
 		setView();
@@ -52,33 +52,40 @@ public class TopLayout extends RelativeLayout{
 			mLoginView.setImageResource(R.drawable.def_head);
 		}
 		mLoginView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (mUser!=null) {//有用户登陆
-					PersonalLayout personalLayout=new PersonalLayout(MainActivity.getInstance());
+				if (mUser != null) {// 有用户登陆
+					PersonalLayout personalLayout = new PersonalLayout(
+							MainActivity.getInstance());
 					MainLayout.getInstance().changeLayout(personalLayout);
-				}
-				else {
-					Builder builder=new Builder(MainActivity.getInstance());
+				} else {
+					Builder builder = new Builder(MainActivity.getInstance());
 					builder.setTitle("提示");
 					builder.setMessage("当前未登录，是否转到登录界面？");
-					builder.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							MainLayout.getInstance().changeLayout(new LoginLayout(MainActivity.getInstance()));
-						}
-					});
-					builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-						}
-					});
+					builder.setPositiveButton(
+							"确定",
+							new android.content.DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									MainLayout.getInstance().changeLayout(
+											new LoginLayout(MainActivity
+													.getInstance()));
+								}
+							});
+					builder.setNegativeButton("取消",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+								}
+							});
 					builder.create().show();
 				}
 			}
@@ -100,11 +107,10 @@ public class TopLayout extends RelativeLayout{
 	 * @param bitmap
 	 */
 	public void setHeadPicture(BmobFile file) {
-		if (file!=null) {
+		if (file != null) {
 			file.loadImageThumbnail(MainActivity.getInstance(), mLoginView,
-				UIControl.topImageData.w, UIControl.topImageData.h);
-		}
-		else {
+					UIControl.topImageData.w, UIControl.topImageData.h);
+		} else {
 			mLoginView.setImageResource(R.drawable.def_head);
 		}
 	}
@@ -124,6 +130,8 @@ public class TopLayout extends RelativeLayout{
 		case LOGINLAYOUT:
 			string = "登陆";
 			break;
+		case MAPLAYOUT:
+			string = "校内地图";
 		default:
 			break;
 		}

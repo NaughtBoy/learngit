@@ -6,11 +6,13 @@ import java.util.Date;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.schoolinfo.control.UIControl;
 import com.schoolinfo.layout.LoginLayout;
 import com.schoolinfo.layout.LostLayout;
 import com.schoolinfo.layout.MainGalleryLayout;
 import com.schoolinfo.layout.MainLayout;
+import com.schoolinfo.layout.MapLayout;
 import com.schoolinfo.layout.PersonalLayout;
 import com.schoolinfo.layout.ReleaseLayout;
 import com.schoolinfo.layout.RunLayout;
@@ -50,7 +52,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mMainActivity = this;
-
+		//初始化百度地图SDK
+		SDKInitializer.initialize(getApplicationContext());
 		// 加载bmob SDK
 		Bmob.initialize(this, BMOBAPPID_STRING);
 		// 加载崩溃分析sdk
@@ -73,7 +76,7 @@ public class MainActivity extends Activity {
 		}
 		// 设置布局
 		this.setContentView(MainLayout.getInstance(this));
-		MainLayout.getInstance().changeLayout(new LoginLayout(this));
+		MainLayout.getInstance().changeLayout(new MapLayout(this));
 	}
 
 	public static MainActivity getInstance() {
